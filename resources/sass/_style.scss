@@ -1,0 +1,59 @@
+body{
+    //background-color: #f7f3e8;
+}
+main{
+    background-image: linear-gradient(rgba(110, 108, 108, 0.5),rgba(110, 108, 108, 0.5)),url('../img/race.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height : 100vh;
+    margin:45px;
+    box-shadow: rgba(20, 19, 19, 0.16) 0px 10px 36px 0px, rgba(20, 19, 19, 0.16) 0px 0px 0px 1px;
+    // background-color: #687ca0;
+}
+a{
+    text-decoration: none;
+}
+
+.divraces{
+    border: 1px solid black;
+    width: 40%;
+    padding: 30px;
+    margin-left: 70px;
+    background-color: rosybrown;
+}
+
+.races{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin : auto;
+    width: 50%;
+}
+.divraces img{
+    width:100%;
+    border: 1px solid;
+    margin: auto;
+}
+
+.info{
+    color: white;
+    background-color: teal;
+    padding: 10px;
+    width: max-content;
+    margin: auto;
+}
+
+.ff{
+    border:1px solid;
+    width:20%;
+    margin:auto;
+}
+
+.logo{
+    width: 100px;
+    height: 100px;
+}
+
+.nav li:nth-child(4) a{
+    font-weight: bold;
+    color: green !important;
+}
