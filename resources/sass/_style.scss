@@ -1,14 +1,22 @@
-body{
-    //background-color: #f7f3e8;
-}
 main{
-    background-image: linear-gradient(rgba(110, 108, 108, 0.5),rgba(110, 108, 108, 0.5)),url('../img/race.jpg');
+    background-image: linear-gradient(rgb(110 108 108 / 77%), rgb(237 235 235 / 21%)),url('../img/race.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-    height : 100vh;
+    height : 70vh;
     margin:45px;
     box-shadow: rgba(20, 19, 19, 0.16) 0px 10px 36px 0px, rgba(20, 19, 19, 0.16) 0px 0px 0px 1px;
     // background-color: #687ca0;
+}
+.options{
+    display: flex;
+    padding: 30px;
+}
+.options div{
+    margin: 30px;
+    border: 1px solid black;
+    width: 30%;
+    text-align: center;
+    padding: 30px;
 }
 a{
     text-decoration: none;
