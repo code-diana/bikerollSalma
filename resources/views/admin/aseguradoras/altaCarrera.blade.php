@@ -1,4 +1,4 @@
-<h1>Seleccionar aseguradora</h1>
+<h1>Aseguradora</h1>
 
 <form action="precioCarrera" method="POST">
     @csrf
