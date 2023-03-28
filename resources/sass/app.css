@@ -1,11 +1,14 @@
 @import url("https://fonts.bunny.net/css?family=Nunito");
 main {
-  background-image: linear-gradient(rgba(110, 108, 108, 0.77), rgba(237, 235, 235, 0.21)), url("../img/race.jpg");
+  background-image: linear-gradient(rgba(110, 108, 108, 0.74), rgba(131, 127, 127, 0.55)), url("../img/racer.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   height: 70vh;
   margin: 45px;
-  box-shadow: rgba(20, 19, 19, 0.16) 0px 10px 36px 0px, rgba(20, 19, 19, 0.16) 0px 0px 0px 1px;
+  box-shadow: 10px 10px 5px #ccc;
+  -moz-box-shadow: 10px 10px 5px #ccc;
+  -webkit-box-shadow: 10px 10px 5px #ccc;
+  -khtml-box-shadow: 10px 10px 5px #ccc;
 }
 
 .options {
@@ -73,4 +76,28 @@ a {
 
 rect {
   fill: #687ca0;
+}
+
+.bd-placeholder-img.card-img-top {
+  height: 120px;
+}
+
+.btn-group {
+  width: 80%;
+  margin: auto;
+}
+
+.btn-group > .btn:hover {
+  background-color: #687ca0;
+}
+
+.container {
+  margin-bottom: 30px;
+}
+
+table {
+  width: 60%;
+  margin: auto;
+  text-align: center;
+  border-collapse: collapse;
 }/*# sourceMappingURL=app.css.map */

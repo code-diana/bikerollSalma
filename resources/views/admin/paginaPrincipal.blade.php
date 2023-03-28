@@ -38,9 +38,8 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Ver todas</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Añadir</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{url('editarCarrera')}}">Ver todas</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{url('anyadirCarrera')}}">Añadir</a>
                   </div>
                 </div>
               </div>
@@ -52,9 +51,8 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Ver todas</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Añadir</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{url('mostrarTodosAs')}}">Ver todas</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{url('anyadirAseguradora')}}">Añadir</a>
                   </div>
                 </div>
               </div>
@@ -66,9 +64,8 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Ver todas</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Añadir</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{url('mostrarSponsors')}}">Ver todos</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="{{url('anyadirSponsor')}}">Añadir</a>
                   </div>
                 </div>
               </div>
@@ -77,3 +74,4 @@
         </div>
       </div>
 @endsection
+

@@ -16,9 +16,8 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Ver todas</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Añadir</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
+                    <a class="btn btn-sm btn-outline-secondary" href="<?php echo e(url('editarCarrera')); ?>">Ver todas</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="<?php echo e(url('anyadirCarrera')); ?>">Añadir</a>
                   </div>
                 </div>
               </div>
@@ -30,9 +29,8 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Ver todas</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Añadir</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
+                    <a class="btn btn-sm btn-outline-secondary" href="<?php echo e(url('mostrarTodosAs')); ?>">Ver todas</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="<?php echo e(url('anyadirAseguradora')); ?>">Añadir</a>
                   </div>
                 </div>
               </div>
@@ -44,9 +42,8 @@
               <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Ver todas</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Añadir</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Editar</button>
+                    <a class="btn btn-sm btn-outline-secondary" href="<?php echo e(url('mostrarSponsors')); ?>">Ver todos</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="<?php echo e(url('anyadirSponsor')); ?>">Añadir</a>
                   </div>
                 </div>
               </div>
@@ -55,4 +52,6 @@
         </div>
       </div>
 <?php $__env->stopSection(); ?>
+
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\bikerollSalma\resources\views/admin/paginaPrincipal.blade.php ENDPATH**/ ?>
