@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 
-class sponsorController extends Controller
-{
+class sponsorController extends Controller{
     public function index(){
         $sponsor = Sponsor::all();
         return view("admin.sponsors.mostrarSponsors" , [
@@ -132,5 +131,5 @@ class sponsorController extends Controller
             ]);
         }
     }
-
+        
 }

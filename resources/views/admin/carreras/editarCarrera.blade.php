@@ -1,8 +1,9 @@
 <style>
     td,th{border: 1px solid;}
     td{width: 80px}
-    table{width: 1200px;margin: auto;text-align: center;}
+    table{width: 1500px;margin: auto;text-align: center;}
     img{width: 50%;height: 50%}
+    iframe{max-width:200px !important;max-height:200px;}
 </style>
 <h1>Carreras</h1>
 <table style="border-collapse:collapse">
@@ -22,7 +23,7 @@
         <th>Subir fotos</th>
         <th>Ver fotos</th>
         <th>Gestionar aseguradoras</th>
-        <th>Generar QR</th>
+        <th>Corredores apuntados</th>
 
     </tr>
     @foreach($carreras as $row)
@@ -35,8 +36,8 @@
             <td>{{$row['description']}}</td>
             <td>{{$row['unevenness']}} km</td>
             
-            <?php $image=preg_replace('([^A-Za-z0-9 ])', '', $row['image'])?>
-            <td><a href="imagenCarrera/{{$id}}"><img src="../resources/img/<?php echo strtolower($image) ?>.jpg" alt=""></a></td>
+            
+            <td><a href="imagenCarrera/{{$id}}"><?php echo $row['image']?></a></td>
 
             <td>{{$row['number_participants']}}</td>
             <td>{{$row['km']}}</td>
@@ -71,7 +72,8 @@
 
             <td><a href="aseguradoraC/{{$id}}"><img src="../resources/img/edit.png" alt=""></a></td>
 
-            <td><a href="qr/{{$id}}"><img src="../resources/img/edit.png" alt=""></a></td>
+            {{-- <td><a href="qr/{{$id}}"><img src="../resources/img/edit.png" alt=""></a></td> --}}
+            <td><a href="runnersRace/{{$id}}">Corredores</a></td>
 
 
         </tr>

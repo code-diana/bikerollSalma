@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Race;
 use App\Models\Runner;
 use App\Models\Inscription;
+use App\Models\Ensure;
+use App\Models\Insurance;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
@@ -24,32 +26,32 @@ class carreraController extends Controller
                 'date'=>request('date'),
                 'promotion'=>request('promotion'),
                 'start'=>request('start'),
-                'state'=>1,
+                //se crean desactivadas
+                'state'=>0,
                 'price'=>request('price')
             ]);  
 
             //subir la imagen
-            if($request->hasFile('image')){
-                $imagen = $request->file('image');
+            if($request->hasFile('promotion')){
+                // $imagen = $request->file('image');
                 $promotion = $request->file('promotion');
 
-                //aquí le asignamos el nombre
-                $nombreimagen = Str::slug($request->file('image')).".".$imagen->guessExtension();
+                // //aquí le asignamos el nombre
+                // $nombreimagen = Str::slug($request->file('image')).".".$imagen->guessExtension();
                 $nombreprom = Str::slug($request->file('promotion')).".".$promotion->guessExtension();
 
                 //y la ruta
                 $ruta = public_path("../resources/img/");
     
                 //$imagen->move($ruta,$nombreimagen);
-                copy($imagen->getRealPath(),$ruta.$nombreimagen);     
+                // copy($imagen->getRealPath(),$ruta.$nombreimagen);     
                 copy($promotion->getRealPath(),$ruta.$nombreprom);     
+                
             }
         }
         else{
             echo "Esta carrera ya ha sido creada";
         }
-
-        return redirect('/anyadirCarrera');
     }
 
     public function showAddRace(){
@@ -64,6 +66,19 @@ class carreraController extends Controller
         }
         else{
             $race->state = 1;
+            if (Ensure::where('id_race',$request->id)->count()==0){
+                ?> <script>alert('Escoge una aseguradora como mínimo')</script> <?php
+                $ins=Insurance::where('estado',1)->get();
+                return view('admin.aseguradoras.altaCarrera' ,[
+                    'insurance' => $ins,
+                    'idC'=> $request->id
+                ]);
+
+            }
+            else{
+                $race->state = 1;
+            }
+
         }
         $race->save();
         $race = Race::all();
@@ -185,7 +200,11 @@ class carreraController extends Controller
         $races = Race::find($id);
 
         //importante el where!
-        $runner = Runner::select('runners.*')->join('inscriptions', 'inscriptions.runner_id', '=', 'runners.id')->join('races', 'races.id','=','inscriptions.race_id')->where('inscriptions.race_id',$id)->get();
+        $runner = Runner::select('runners.*')
+                ->join('inscriptions', 'inscriptions.runner_id', '=', 'runners.id')
+                ->join('races', 'races.id','=','inscriptions.race_id')
+                ->where('inscriptions.race_id',$id)
+                ->get();
         $dorsales= Inscription::where('race_id',$id)->get();
         //rellenar los dorsales
         return view('admin.carreras.qrs',[
@@ -213,6 +232,11 @@ class carreraController extends Controller
         return view('admin.inscripciones.inscripcion' , [
             'races' => $races
         ]);
+    }
+
+    public function clasificacionSexo(Request $request){
+        $id = $request->id;
+        echo "aqui salen las clasificaciones por sexo";
     }
 }
 

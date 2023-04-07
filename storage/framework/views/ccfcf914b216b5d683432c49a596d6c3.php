@@ -1,12 +1,11 @@
-<style>
-    table{border-collapse: collapse}
-    td,tr,th{border:1px solid}
-</style>
+<?php $__env->startSection('content'); ?>
+<?php
+    $id_race = $id;
+?>
+<h1>Corredores apuntados en la carrera <?php echo e($id_race); ?></h1>
 
-<h1>Corredores apuntados en la carrera <?php echo e($id); ?></h1>
 
-
-<form action="<?php echo e($id); ?>" method="post">
+<form action="<?php echo e($id_race); ?>" method="post">
     <?php echo csrf_field(); ?>
     <input type="text" name="buscador" id="busc">
     <input type="submit" value="Buscar" name="buscButton">
@@ -24,7 +23,9 @@
             <th>Dirección</th>
             <th>Pro</th>
             <th>Numero federación</th>
+            <th>Dorsal</th>
             <th>Puntos</th>
+            <th>Generar QR</th>
         </tr>
         <?php $__currentLoopData = $runners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $runner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <?php
@@ -51,11 +52,23 @@
                     <td>No</td>
                     <td>----</td>
                 <?php endif; ?>
+                <td><?php echo e($runner->dorsal); ?></td>
                 <td><?php echo e($runner->points); ?></td>
+                <?php
+                    $id_runner = $runner->id;
+                    //Link de la pagina en real
+                    $url = route('datosQr' , ['id_runner' => $id_runner , 'id_race' => $id_race]);
+                    //$url = "http://www.dianasalma-pruebas.com.mialias.net/bikeroll/public/datosQr/$id";
+                    echo $url;
+                ?>
+                <td><?php echo QrCode::size(100)->generate($url); ?></td>
+
             </tr>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </table>
 <?php endif; ?>
 
 <a href="<?php echo e(url('/paginaPrincipal')); ?>">Pagina principal</a>
-<?php /**PATH C:\xampp\htdocs\bikerollSalma\resources\views/admin/inscripciones/runnersRace.blade.php ENDPATH**/ ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\bikerollSalma\resources\views/admin/inscripciones/runnersRace.blade.php ENDPATH**/ ?>

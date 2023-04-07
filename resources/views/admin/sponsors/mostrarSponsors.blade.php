@@ -1,11 +1,4 @@
-<style>
-    td,th{border: 1px solid;}
-    td:last-child img{width: 50px}
-    td{width: 12.85%}
-    table{width: 90%;margin: auto;text-align: center;}
-    img{width: 40px;height: 40px}
-</style>
-<h1>sponsors</h1>
+@extends('layouts.layout')
 {{-- Para mostrar la alerta con el mensaje --}}
 @if (session('mensaje'))
     <script>
@@ -13,45 +6,49 @@
     </script>
 @endif
 {{-- -------------------------------------- --}}
-<table style="border-collapse:collapse">
-    <tr>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>logo</th>
-        <th>plana principal</th>
-        <th>Estado</th>
-        <th>Editar</th>
-        <th>Seleccionar carreras</th>
-        <th>Descargar pdf</th>
-    </tr>
+@section('content')
+    <h2>Patrocinadores</h2>
+    <a href="{{url('anyadirSponsor')}}" class="btn btn-primary">Añadir nuevo sponsor</a>
+    <div class="row">
     @foreach($sponsor as $row)
         @php
             $id = $row['id'];
-        @endphp
-        <tr>
-            <td>{{$row['name']}}</td>
-            <td>{{$row['description']}}</td>
-            
-            <?php 
             $logo=preg_replace('([^A-Za-z0-9 ])', '', $row['logo']);
-            ?>
-            <td><img src="../resources/img/<?php echo strtolower($logo) ?>.png" alt=""></td>
+        @endphp
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="	http://localhost/bikerollSalma/resources/img/<?php echo strtolower($logo) ?>.png" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{$row['name']}}</h5>
+                <p class="card-text">{{$row['description']}}</p>
+                <p class="card-text">
+                    <small class="text-muted">
+                        Plana principal: 
+                        @if($row['main_plain'] == 0)
+                            No
+                        @else
+                            Sí
+                        @endif
+                    </small>
+                </p>
+                <p>
+                    Estado: 
+                    @if ($row['sponsorState'] == 0)
+                        <a href="activarSponsor/{{$id}}"><img style="width:40px;height:40px" src="	http://localhost/bikerollSalma/resources/img/off.png" alt=""></a>
+                    @else
+                        <a href="activarSponsor/{{$id}}"><img style="width:40px;height:40px" src="	http://localhost/bikerollSalma/resources/img/on.png" alt=""></a>
+                    @endif
+                </p>
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-outline-secondary" href="editarSponsor/{{$id}}">Editar datos</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="editarLogo/{{$id}}">Editar logo</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="selectRaces/{{$id}}">Seleccionar carreras</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="carreras-sponsor/{{$id}}">Ver carreras</a>
+                </div>
+                <a href="download-pdf/{{$id}}" class="btn btn-primary">Descargar PDF</a>
+            </div>
 
-            <td>
-                @if($row['main_plain'] == 0)
-                    {{"No"}}
-                @else
-                    {{"Sí"}}
-                @endif
-            </td>
-            <td>
-                @if ($row['sponsorState'] == 0)
-                    <a href="activarSponsor/{{$id}}"><img src="../resources/img/off.png" alt=""></a>
-                @else
-                    <a href="activarSponsor/{{$id}}"><img src="../resources/img/on.png" alt=""></a>
-                @endif
-            </td>
-            <td>
+        </div>
+            {{-- <td>
                 <a href="editarSponsor/{{$id}}"><img src="../resources/img/edit.png" alt=""></a>
                 <a href="editarLogo/{{$id}}"><img src="../resources/img/pic.png" alt=""></a>
             </td>
@@ -60,9 +57,8 @@
             </td>
             <td>
                 <a href="download-pdf/{{$id}}"><img src="../resources/img/download.png" alt="descargar pdf"></a>
-            </td>
-        </tr>
+            </td> --}}
     @endforeach
-</table>
-
-<a href="{{url('/paginaPrincipal')}}">Pagina principal</a>
+    </div>
+    <a href="{{url('/paginaPrincipal')}}">Pagina principal</a>
+@endsection

@@ -7,6 +7,14 @@ use Illuminate\Support\Facades\Config;
 
 use PayPal\Auth\OAuthTokenCredential;
 use PayPal\Rest\ApiContext;
+use PayPal\Api\Amount;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\Details;
+use PayPal\Api\PaymentExecution;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Transaction;
+
 
 
 class PaymentController extends Controller
@@ -33,16 +41,16 @@ class PaymentController extends Controller
         $payer->setPaymentMethod('paypal');
 
         $amount = new \PayPal\Api\Amount();
-        $amount->setTotal('1.00');
-        $amount->setCurrency('USD');
+        $amount->setTotal(floatval($request->price));
+        $amount->setCurrency('EUR');
 
         $transaction = new \PayPal\Api\Transaction();
         $transaction->setAmount($amount);
 
-        $callback=url('status');
+        // $callback=url('/paypal/status');
         $redirectUrls = new \PayPal\Api\RedirectUrls();
-        $redirectUrls->setReturnUrl($callback)
-            ->setCancelUrl($callback);
+        $redirectUrls->setReturnUrl(url('/paypal/status'))
+            ->setCancelUrl(url('/paypal/status'));
 
         $payment = new \PayPal\Api\Payment();
         $payment->setIntent('sale')
@@ -63,10 +71,40 @@ class PaymentController extends Controller
             //REALLY HELPFUL FOR DEBUGGING
             echo $ex->getData();
         }
-            }
+    }
 
         public function payPalStatus(Request $request){
-            dd($request->all());
+            $paymentId= $request->input('paymentId');       
+            $payerId= $request->input('PayerID');     
+            $token= $request->input('token');
+
+            if (!$paymentId || !$payerId || !$token){
+                $status='No se pudo proceder con el pago a través de PayPal';
+                return redirect()->route('results')->with(compact('status'));
+            }
+
+            $payment = Payment::get($paymentId, $this->apiContext);
+
+            $execution=new PaymentExecution();
+            $execution->setPayerId($payerId);
+
+            //Execute the payment
+            $result = $payment->execute($execution, $this->apiContext);
+            
+            if ($result->getState() === 'approved'){
+                $status = 'Gracias! El pago a través de PayPal se ha realizado correctamente';
+                return redirect()->route('results')->with(compact('status'));
+            }
+
+            $status = 'Lo sentimos! El pago a través de PayPal no se pudo realizar';
+            return redirect()->route('results')->with(compact('status'));
+        
+        }
+
+        public function payPalView(Request $request){
+            if($request->session()->has('status')){
+                echo session('status');
+            }
         }
 }
 ?>
