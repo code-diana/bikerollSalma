@@ -160,7 +160,7 @@ class inscripcionController extends Controller{
         if ($inscription) {
             // Actualizar el campo 'finish_time'
             $inscription->update([
-                    'finish_time' => $fechaActual // Ahora es la fecha y hora actual
+                    'finish_time' => $fechaActual
                 ]);
         }
         //Obtener todos los corredores y orderalos por 

@@ -13,9 +13,9 @@
 
 
 <?php if(count($runners)==0): ?>
-    <p>No hay ningún corredor matriculado en esta carrera</p>
+    <p>¡No se han encontrados resultados!</p>
 <?php else: ?>
-    <table>
+    <table class="qrTable">
         <tr>
             <th>Nombre</th>
             <th>Edad</th>
