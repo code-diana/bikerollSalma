@@ -1,115 +1,213 @@
 <?php $__env->startSection('content'); ?>
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
-            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-            <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="http://localhost/bikerollSalma/resources/pics/race3.jpg" class="d-block w-100" alt="Imagen 1">
-            </div>
-            <div class="carousel-item">
-                <img src="http://localhost/bikerollSalma/resources/pics/race2.jpg" class="d-block w-100" alt="Imagen 2">
-            </div>
-            <div class="carousel-item">
-                <img src="http://localhost/bikerollSalma/resources/pics/race1.jpg" class="d-block w-100" alt="Imagen 3">
-            </div>
-        </div>
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Siguiente</span>
-        </button>
+<div id="portada">
+    <img class="portada" src="../resources/img/Portada.png">
+    <div class="textoportada">
+    <h1 class="titulo">BIKEROLL</h1>
+        <button type="button"  class="btn btn-primary portadabuttonright portadacommon"><a href="#about-section">Visitar la web</a></button>
     </div>
+</div>
 
-    <div class="divCarreras">
+<section id="about-section" class="pt-5 pb-5">
+    <div class="container wrapabout">
+        <div class="red"></div>
         <div class="row">
-            <?php $limit=0; ?>
-            <?php $__currentLoopData = $races; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $race): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php
-                if ($limit!=4){
-                    $id = $race['id'];
-
-                    //control de fechas ESTO SÍ QUE FUNCIONA
-                    $fecha_actual = strtotime(date("d-m-Y H:i:00",time()));
-                    $newDate = strtotime($race['date']); 
-
-                if ($newDate>$fecha_actual){
-                ?>
-                <div class="col-lg-3">
-                    <?php $prom=preg_replace('([^A-Za-z0-9 ])', '', $race['promotion'])?>
-                    <img class="carrerasproximas" src="../resources/img/<?php echo strtolower($prom) ?>.jpg" alt="">
-                    <h2><?php echo e($race['title']); ?></h2>
-                    <p><?php echo e($race['description']); ?></p>
-                    <p><?php echo e($race['date']); ?></p>
-                    <a href="infoRace/<?php echo e($id); ?>"><div class="info but"><p>Más información</p></div></a>
-                </div>
-                <?php 
-                $limit++;
-                }
-                }
-                ?>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </div>
-    </div>
-
-    <p class="divisor"></p>
-
-    <div class="divSponsors">
-        <div class="titleSpon"><p>Patrocinadores</p></div>
-        <div class="container">
-            <div class="row">
-                <?php $__currentLoopData = $sponsors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sponsor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <div class="col-sm">
-                        <?php
-                            $id = $sponsor['id'];
-                        ?>
-                        <?php $image=preg_replace('([^A-Za-z0-9 ])', '', $sponsor['logo'])?>
-                        <img class="logo" src="../resources/img/<?php echo strtolower($image) ?>.png" alt="">
+            <div class="col-lg-8 col-sm-6 align-items-center justify-content-left d-flex mb-5 mb-lg-0 col-xs-4">
+                <div class="blockabout">
+                    <div class="blockabout-inner text-center text-sm-start">
+                        <div class="title-big pb-3 mb-3">
+                            <h3>Bienvenid@ a Bikeroll</h3>
+                        </div>
+                        <p class="description-p text-muted pe-0 pe-lg-0">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus quas optio reiciendis deleniti voluptatem facere sequi, quia, est sed dicta aliquid quidem facilis culpa iure perferendis? Dolor ad quia deserunt.
+                        </p>
+                        <p class="description-p text-muted pe-0 pe-lg-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus quas optio reiciendis deleniti voluptatem facere.</p>
+                        <div class="sosmed-horizontal pt-3 pb-3">
+                            <a target="_blank" href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a>
+                            <a target="_blank" href="https://twitter.com/?lang=es"><i class="fa fa-instagram"></i></a>
+                            <a target="_blank" href="https://www.pinterest.es/"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                        <a href="#carrerasprincipales" class="btn rey-btn mt-3">Próximas Carreras</a>
                     </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mt-5 mt-lg-0">
+                <figure class="potoaboutwrap">
+                    <img src="../resources/img/aboutus.png" alt="potoabout" />
+                </figure>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Finalizadas -->
-    <div class="row">
-        <h1>Carreras Recientes</h1>
-        <?php $cont=0; ?>
-        <?php $__currentLoopData = $fin; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $f): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <?php
-            if($cont!=2){
-                $id = $race['id'];
 
-                $fecha_actual = strtotime(date("d-m-Y H:i:00",time()));
-                $newDate = strtotime($f['date']); 
-
-                $hoy=now();
-                $carrera=$f->date;
-                $intervalo = $hoy->diff($carrera);
-
-                //Cogemos las carreras del ultimo mes con limite de 2, lo cogemos por descendente por lo tanto siempre saldrá la mas cercana primero
-                if ($newDate<$fecha_actual && $intervalo->m<=3){
-            ?>
-            <div class="col-lg-6">
-                <?php $prom=preg_replace('([^A-Za-z0-9 ])', '', $f['promotion'])?>
-                <img class="carrerasproximas"  src="../resources/img/<?php echo strtolower($prom) ?>.jpg" alt="">
-                <h2><?php echo e($f['title']); ?></h2>
-                <p><?php echo e($f['description']); ?></p>
-                <p><?php echo e($f['date']); ?></p>
-                <a href="infoRace/<?php echo e($id); ?>"><div class="info but"><p>Más información</p></div></a>
+<div style="background-color:#f0f4fa;"  id="carrerasprincipales">
+    <div class="container">
+        <div class="divCarreras">
+            <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 style="display:inline">Próximas Carreras</h1>
+                        </div>
+                    </div>
             </div>
-                <?php 
-            //Limit 2
-            $cont++;
-            } 
-        }?>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <hr>
+
+    
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <?php $limit=0; ?>
+                <?php $__currentLoopData = $races; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $race): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php
+                    if ($limit<3){
+                        $id = $race['id'];
+
+                        //control de fechas ESTO SÍ QUE FUNCIONA
+                        $fecha_actual = strtotime(date("d-m-Y H:i:00",time()));
+                        $newDate = strtotime($race['date']); 
+
+                    if ($newDate>$fecha_actual){
+                    ?>
+
+
+                    <div class="col-lg-4 col-md-6">
+                    <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title"><?php echo e($race['title']); ?></h5>
+                    </div>
+                    <div class="card-body">
+                        <?php $prom=preg_replace('([^A-Za-z0-9 ])', '', $race['promotion'])?>
+                        <p class="card-text" style="max-height:300px !important;text-align:center"><img src="../resources/img/<?php echo strtolower($prom) ?>.jpg" alt="" style="margin:0 auto;max-height:250px !important;"></p>
+                        
+                        <p class="card-text"><strong> </strong> <?php echo e($race['description']); ?></p>
+                        <p class="card-text"><strong>Salida:</strong> <?php echo e($race['start']); ?></p>
+                        <p class="card-text"><strong>Distancia:</strong> <?php echo e($race['km']); ?> km</p>
+
+                        <?php
+                        $time = strtotime($race['date']);
+                        $format = date('d/m/Y H:i',$time);
+                        ?>
+                        <p class="card-text"><strong>Fecha:</strong> <?php echo $format ?></p>
+
+                        
+                        <!-- <p class="card-text"><a href="infoRace/<?php echo e($id); ?>"><div class="btn btn-primary but info" style="text-align:center">Más información</div></a></p> -->
+                        <!-- <div class="card-footer"> -->
+                        <a href="infoRace/<?php echo e($id); ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i>Más información</a>
+                        <!-- </div> -->
+                    </div>
+                    
+                    </div>
+                    </div>
+                    <?php 
+                    $limit++;
+                    }
+                    }
+                    ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> 
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<div style="background-color:#000;color:#fff" class="sectionsponsor">
+    <div class="container">
+            <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1 style="display:inline">Sponsors</h1>
+                            </div>
+                        </div>
+            </div>
+        
+            <div class="col-lg-12 col-sm-6 logosmobile">
+                <?php  $log=0;?>
+                <?php $__currentLoopData = $sponsors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sponsor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php
+                        $id = $sponsor['id'];
+                        if ($log<5){
+                    ?>
+                    <!-- <div class="col-lg-4 col-sm-12 logos"> -->
+                        <?php $image=preg_replace('([^A-Za-z0-9 ])', '', $sponsor['logo'])?>
+                        <a  style="display:inline !important"><img class="logo" src="../resources/img/<?php echo strtolower($image) ?>.png" alt=""></a>
+                    <!-- </div> -->
+                    <?php } $log++; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            
+        </div>
+            </div>
+    </div>
+</div>
+
+<div style="background-color:#f0f4fa;" class="section">
+    <div class="container">
+    <!-- Finalizadas -->
+        <div class="row">
+                <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h1 style="display:inline">Carreras Recientes</h1>
+                                </div>
+                            </div>
+                    </div>
+                    <hr>
+                <?php $cont=0; ?>
+                <?php $__currentLoopData = $fin; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $f): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php
+                    if($cont<2){
+                        $id = $f['id'];
+
+                        $fecha_actual = strtotime(date("d-m-Y H:i:00",time()));
+                        $newDate = strtotime($f['date']); 
+
+                        $hoy=now();
+                        $carrera=$f->date;
+                        $intervalo = $hoy->diff($carrera);
+
+                        //Cogemos las carreras del ultimo mes con limite de 2, lo cogemos por descendente por lo tanto siempre saldrá la mas cercana primero
+                        if ($newDate<$fecha_actual && $intervalo->m<=3){
+                    ?>
+
+                    <div class="col-lg-6 col-md-6">
+                                        <div class="card h-100">
+                                        <div class="card-header">
+                                            <h5 class="card-title"><?php echo e($f['title']); ?></h5>
+                                        </div>
+                                        <div class="card-body">
+                                        <?php $prom=preg_replace('([^A-Za-z0-9 ])', '', $f['promotion'])?>
+                                        <p class="card-text" style="max-height:500px !important;text-align:center"><img src="../resources/img/<?php echo strtolower($prom) ?>.jpg" alt="" style="margin:0 auto;max-height:300px !important;max-width:500px;"></p>
+                                        <p class="card-text"><strong> </strong> <?php echo e($f['description']); ?></p>
+                                        <?php
+                                        $time = strtotime($f['date']);
+                                        $format = date('d/m/Y H:i',$time);
+                                        ?>
+                                        <p class="card-text"><strong>Fecha:</strong> <?php echo $format ?></p>
+
+                                        <a href="infoRace/<?php echo e($id); ?>" class="btn btn-primary"><i class="bi bi-pencil-square"></i>Más información</a>
+
+
+
+                                        </div>
+                                        </div>
+                    
+                    </div>
+                    
+
+                    <!-- <div class="col-lg-4 col-sm-6">
+                        <?php $prom=preg_replace('([^A-Za-z0-9 ])', '', $f['promotion'])?>
+                        <img class="carrerasproximas"  src="../resources/img/<?php echo strtolower($prom) ?>.jpg" alt="">
+                        <h2><?php echo e($f['title']); ?></h2>
+                        <p><?php echo e($f['description']); ?></p>
+                        <p><?php echo e($f['date']); ?></p>
+                        <a href="infoRace/<?php echo e($id); ?>"><div class="info but"><p>Más información</p></div></a>
+                    </div> -->
+                        <?php 
+                    //Limit 2
+                    $cont++;
+                    } 
+                }?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            
+            <!-- </div> -->
+        </div>
     </div>
 </div>
 <?php $__env->stopSection(); ?>

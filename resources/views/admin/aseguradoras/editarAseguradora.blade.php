@@ -1,6 +1,14 @@
 @extends('layouts.layout')
 @section('content')
-    <div class="container" style="margin-top: 50px;">
+    <div class="container air" style="margin-top: 50px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="{{url('mostrarTodosAs')}}" class="btn btn-primary float-right mr-3" style="margin: 10px 0 0 20px;">Aseguradoras</a>
+                    <a href="{{url('/paginaPrincipal')}}" class="btn btn-primary float-right" style="margin-top: 10px;">Página principal</a>
+                </div>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card" style="border:3px solid #eee">
@@ -44,5 +52,4 @@
             </div>
         </div>
     </div>
-    <a href="{{url('/paginaPrincipal')}}">Pagina principal</a>
 @endsection

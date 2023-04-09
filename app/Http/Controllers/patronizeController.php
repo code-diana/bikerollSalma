@@ -8,6 +8,7 @@ use App\Models\Sponsor;
 use App\Models\Race;
 use Illuminate\Support\Facades\DB;
 use PDF;
+use Termwind\Components\Raw;
 
 class patronizeController extends Controller
 {
@@ -91,13 +92,47 @@ class patronizeController extends Controller
 
     public function carreraSponsor(Request $request){
         $id = $request->id;
+
+        if(isset($_POST['buscador'])){
+            $buscador = $request->input('buscador');
+            $races = DB::table('patronize')
+                    ->select('patronize.*' , 'races.*')
+                    ->join('races', 'patronize.race_id', '=', 'races.id')
+                    ->where('sponsor_id', '=', $id)
+                    ->where(function($query) use ($buscador) {
+                        $query->where('title', 'LIKE', '%' . $buscador . '%')
+                                ->orWhere('price', 'LIKE', '%' . $buscador . '%')
+                                ->orWhere('date', 'LIKE', '%' . $buscador . '%');
+                    })
+                    ->get();      
+        }
+        else{
+            $races = DB::table('patronize')
+            ->select('patronize.*' , 'races.*')
+            ->join('races', 'patronize.race_id', '=', 'races.id')
+            ->where('sponsor_id', '=', $id)
+            ->get();
+        }
+
+        return view('admin.sponsors.carreraSponsor' , ['races' => $races , 'id' =>$id]);
+    }
+
+    public function deleteRace(Request $request){
+        $id_race = $request->id_race;
+        $id = $request->id_sponsor;
+
+        //Eliminar de la tabla 
+        DB::table('patronize')
+            ->where('race_id', $id_race)
+            ->where('sponsor_id', $id)
+            ->delete();
+
         $races = DB::table('patronize')
         ->select('patronize.*' , 'races.*')
         ->join('races', 'patronize.race_id', '=', 'races.id')
         ->where('sponsor_id', '=', $id)
         ->get();
-
-        return view('admin.sponsors.carreraSponsor' , ['races' => $races , 'id' =>$id]);
+        return redirect()->route('carreraSponsor', ['id' => $id]);
     }
 }
 

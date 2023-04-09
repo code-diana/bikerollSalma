@@ -32,7 +32,7 @@ Route::get('/', principalPageController::class , 'show');
 Route::get('paginaPrincipal', [principalPageController::class , 'showPrincipalPage'])->name('paginaPrincipal')->middleware('admin');
 Route::get('paginaPrincipalAdmin', [principalPageController::class , 'showPrincipalPage'])->name('paginaPrincipalAdmin')->middleware('admin');
 
-Route::get('altaCorredor/{id}', [corredorController::class , 'showForm'])->middleware('admin');
+Route::get('altaCorredor/{id}', [corredorController::class , 'showForm']);
 Route::post('altaCorredor/{id}', [corredorController::class , 'showForm']);
 
 Route::get('/formAdmin', [adminController::class , 'show'])->name('formAdmin');
@@ -43,7 +43,10 @@ Route::get('logout', [adminController::class , 'logout']);
 //Aseguradores
 Route::get('anyadirAseguradora', [aseguradoraController::class , 'create'])->middleware('admin');
 Route::post('anyadirAseguradora', [aseguradoraController::class , 'create']);
+
 Route::get('mostrarTodosAs', [aseguradoraController::class , 'index'])->name('mostrarTodosAs')->middleware('admin');
+Route::post('mostrarTodosAs', [aseguradoraController::class , 'index'])->name('mostrarTodosAs')->middleware('admin');
+
 Route::get('editarAseguradora/{id}' , [aseguradoraController::class , 'edit'])->middleware('admin');
 Route::post('editarAseguradora/{id}' , [aseguradoraController::class , 'edit']);
 Route::get('activarAseguradora/{id}' , [aseguradoraController::class , 'activate'])->middleware('admin');
@@ -51,7 +54,10 @@ Route::get('activarAseguradora/{id}' , [aseguradoraController::class , 'activate
 //Sponsors
 Route::get('anyadirSponsor' , [sponsorController::class , 'create'])->middleware('admin');
 Route::post('anyadirSponsor' , [sponsorController::class , 'create']);
+
 Route::get('mostrarSponsors', [sponsorController::class , 'index'])->name('mostrarSponsors')->middleware('admin');
+Route::post('mostrarSponsors', [sponsorController::class , 'index'])->name('mostrarSponsors')->middleware('admin');
+
 Route::get('editarSponsor/{id}' , [sponsorController::class , 'edit'])->middleware('admin');
 Route::post('editarSponsor/{id}' , [sponsorController::class , 'edit']);
 Route::get('activarSponsor/{id}' , [sponsorController::class , 'activate'])->middleware('admin');
@@ -62,6 +68,7 @@ Route::post('editarLogo/{id}' , [sponsorController::class , 'editLogo']);
 Route::post('chooseRaces/{id}' , [patronizeController::class , 'showRaces']);
 //Carrera
 Route::get('anyadirCarrera', [carreraController::class , 'showAddRace'])->middleware('admin');
+Route::get('eliminarCarrera/{id_race}/{id_sponsor}', [patronizeController::class , 'deleteRace']);
 
 Route::post('anyadirCarrera', [carreraController::class , 'addRace']);
 
@@ -97,10 +104,11 @@ Route::post('runnersRace/{id}' , [inscripcionController::class , 'showRunners'])
 
 //Sponsors-Carrera
 Route::get('sponsorCarrera' , [patronizeController::class , 'showSponsors'])->middleware('admin');
-Route::get('carreras-sponsor/{id}', [patronizeController::class , 'carreraSponsor'])->middleware('admin');
+Route::get('carreras-sponsor/{id}', [patronizeController::class , 'carreraSponsor'])->name('carreraSponsor')->middleware('admin');
+Route::post('carreras-sponsor/{id}', [patronizeController::class , 'carreraSponsor'])->name('carreraSponsor')->middleware('admin');
 
 //Mostrar informacion carrera
-Route::get('infoRace/{id}' , [carreraController::class , 'showInfoRace'])->middleware('admin');
+Route::get('infoRace/{id}' , [carreraController::class , 'showInfoRace']);
 Route::get('fotosRace/{id}', [pictureController::class , 'viewPage']);
 
 //inscripcion
@@ -125,11 +133,13 @@ Route::get('/paypal/status', 'App\Http\Controllers\PaymentController@payPalStatu
 Route::get('/paypal/results', 'App\Http\Controllers\PaymentController@payPalView')->name('results');
 
 //Factura corredor
-Route::get('facturaCorredor' ,[inscripcionController::class , 'facturaCorredor'])->name('facturaCorredor');
-Route::post('facturaCorredor' ,[inscripcionController::class , 'facturaCorredor'])->name('facturaCorredor');
+Route::get('facturaCorredor/{id}' ,[inscripcionController::class , 'facturaCorredor'])->name('facturaCorredor');
 
 //descargar pdf
 Route::get('download-pdf/{id}', [patronizeController::class, 'downloadPdf'])->name('download-pdf');
+
+//ver fotos gente
+Route::get('fotosPublicas/{id}' ,[pictureController::class , 'publica']);
 
 //Clasificaciones
 Route::get('clasificacionSexo/{id}', [carreraController::class, 'clasificacionSexo'])->name('clasi-sexo');

@@ -33,11 +33,8 @@
     <p></p>
   
 </form>
-<form action="facturaCorredor" method="post">
-  <input type="submit" value="Descargar factura">
-  <input type="hidden" name="id_runner" value="{{$runner}}">
-</form>
-<a href="{{route('facturaCorredor' , $runner)}}">Descargar factura</a>  
+
+<a href="facturaCorredor/{{$runner}}">Descargar factura</a>  
 
 {{-- <p><a href="{{url('/')}}">Volver atrás</a></p> --}}
 

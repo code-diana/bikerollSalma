@@ -1,10 +1,12 @@
 @extends('layouts.layout')
 
 @section('content')
-    <div class="container mt-3">
+    <div class="container mt-3 air">
         <div class="row">
             <div class="col-lg-12">
-                <a href="{{url('mostrarTodosAs')}}" class="btn btn-primary float-right mr-3" style="margin-top: 30px;">Ver aseguradoras</a>
+                <a href="{{url('mostrarTodosAs')}}" class="btn btn-primary float-right mr-3" style="margin: 10px 0 0 10px;">Ver aseguradoras</a>
+                <a href="{{url('/paginaPrincipal')}}" class="btn btn-primary float-right" style="margin-top: 10px;">Página principal</a>
+
             </div>
         </div>
     </div>
@@ -60,5 +62,4 @@
             </div>
         </div>
     </div>
-    <a href="{{url('/paginaPrincipal')}}">Pagina principal</a>
 @endsection

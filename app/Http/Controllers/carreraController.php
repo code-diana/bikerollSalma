@@ -52,6 +52,8 @@ class carreraController extends Controller
         else{
             echo "Esta carrera ya ha sido creada";
         }
+
+        return redirect('/anyadirCarrera');
     }
 
     public function showAddRace(){
@@ -65,7 +67,6 @@ class carreraController extends Controller
             $race->state = 0;
         }
         else{
-            $race->state = 1;
             if (Ensure::where('id_race',$request->id)->count()==0){
                 ?> <script>alert('Escoge una aseguradora como mínimo')</script> <?php
                 $ins=Insurance::where('estado',1)->get();
@@ -78,8 +79,9 @@ class carreraController extends Controller
             else{
                 $race->state = 1;
             }
-
+            
         }
+
         $race->save();
         $race = Race::all();
         
@@ -146,7 +148,6 @@ class carreraController extends Controller
         }
     }
 
-
     public function editProm(Request $request){
         $carrera = Race::find($request->id);
         if ($request->isMethod('post')){
@@ -179,19 +180,41 @@ class carreraController extends Controller
     }
 
 
-    public function showEditRace(){
-        $carreras = Race::all();
+    public function showEditRace(Request $request){
+        if (isset($_POST['buscador'])){
+            $buscador = $request->input('buscador');
+            $carreras = Race::where('state',1)->orderBy('date', 'ASC')->where('title', 'like', '%' . $buscador . '%')
+                        ->orWhere('km', 'like', '%' . $buscador . '%')
+                        ->orWhere('date', 'like', '%' . $buscador . '%')
+                        ->orWhere('start', 'like', '%' . $buscador . '%')
+                        ->get();
+        }
+        else{
+
+            $carreras = Race::all();
+            
+            //echo $carreras;
+        }
         return view('admin.carreras.editarCarrera',[
             'carreras' => $carreras
         ]);  
-        //echo $carreras;
     }
 
     public function showInfoRace(Request $request){
         $id = $request->id;
         $races = Race::find($id);
+
+        //sponsors
+        $sponsor= DB::table('patronize')
+                ->join('sponsors', 'sponsors.id', '=', 'patronize.sponsor_id')
+                ->where('patronize.race_id', '=', $id)
+                ->where('sponsors.main_plain','=',1)
+                ->where('sponsors.sponsorState','=',1)
+                ->get();
+
         return view('infoRace' , [
-            'races' => $races
+            'races' => $races,
+            'sponsors'=>$sponsor
         ]);
     }
 
@@ -200,11 +223,7 @@ class carreraController extends Controller
         $races = Race::find($id);
 
         //importante el where!
-        $runner = Runner::select('runners.*')
-                ->join('inscriptions', 'inscriptions.runner_id', '=', 'runners.id')
-                ->join('races', 'races.id','=','inscriptions.race_id')
-                ->where('inscriptions.race_id',$id)
-                ->get();
+        $runner = Runner::select('runners.*')->join('inscriptions', 'inscriptions.runner_id', '=', 'runners.id')->join('races', 'races.id','=','inscriptions.race_id')->where('inscriptions.race_id',$id)->get();
         $dorsales= Inscription::where('race_id',$id)->get();
         //rellenar los dorsales
         return view('admin.carreras.qrs',[
@@ -234,6 +253,34 @@ class carreraController extends Controller
         ]);
     }
 
+        /****pagina de carreras****/
+    public function allrace(Request $request){
+
+        if (isset($_POST['buscador'])){
+            $buscador = $request->input('buscador');
+            $races = Race::where('state',1)->orderBy('date', 'ASC')->where('title', 'like', '%' . $buscador . '%')
+                        ->orWhere('km', 'like', '%' . $buscador . '%')
+                        ->orWhere('date', 'like', '%' . $buscador . '%')
+                        ->orWhere('start', 'like', '%' . $buscador . '%')
+                        ->get();
+
+            $fin= Race::where('state',1)->orderBy('date', 'DESC')->where('title', 'like', '%' . $buscador . '%')
+            ->orWhere('km', 'like', '%' . $buscador . '%')
+            ->orWhere('date', 'like', '%' . $buscador . '%')
+            ->orWhere('start', 'like', '%' . $buscador . '%')
+            ->get();
+        }
+
+        else{
+            //proximas
+            $races = Race::where('state',1)->orderBy('date', 'ASC')->get();
+            $fin = Race::where('state',1)->orderBy('date', 'DESC')->get();
+        }
+        return view('carreras' , [
+            'races' => $races,'fin' => $fin
+        ]);
+    }
+    
     public function clasificacionSexo(Request $request){
         $id = $request->id;
         echo "aqui salen las clasificaciones por sexo";

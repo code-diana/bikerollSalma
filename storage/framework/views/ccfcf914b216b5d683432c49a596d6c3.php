@@ -2,73 +2,77 @@
 <?php
     $id_race = $id;
 ?>
-<h1>Corredores apuntados en la carrera <?php echo e($id_race); ?></h1>
 
+<div class="container mt-5">
+    <h1 class="mb-4">Corredores apuntados en la carrera <?php echo e($id_race); ?></h1>
 
-<form action="<?php echo e($id_race); ?>" method="post">
-    <?php echo csrf_field(); ?>
-    <input type="text" name="buscador" id="busc">
-    <input type="submit" value="Buscar" name="buscButton">
-</form>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <form action="<?php echo e($id_race); ?>" method="post">
+                <?php echo csrf_field(); ?>
+                <div class="input-group">
+                    <input type="text" name="buscador" class="form-control" placeholder="Buscar por nombre o precio...">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit" name="buscButton">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
 
-
-<?php if(count($runners)==0): ?>
-    <p>¡No se han encontrados resultados!</p>
-<?php else: ?>
-    <table class="qrTable">
-        <tr>
-            <th>Nombre</th>
-            <th>Edad</th>
-            <th>Genero</th>
-            <th>Dirección</th>
-            <th>Pro</th>
-            <th>Numero federación</th>
-            <th>Dorsal</th>
-            <th>Puntos</th>
-            <th>Generar QR</th>
-        </tr>
-        <?php $__currentLoopData = $runners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $runner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <?php
-                //Calcular la edad de la persona depende de su fecha de nacimiento
-                $edad = now()->diff($runner->birth_date)->y;
-            ?>
-
-            <tr>
-                <td><?php echo e($runner->name . ' ' . $runner->last_name); ?></td>
-                <td><?php echo e($edad); ?></td>
-                
-                <?php if($runner->sex == 1): ?>
-                    <td>Mujer</td>
-                <?php else: ?>
-                    <td>Hombre</td>
-                <?php endif; ?>
-
-                <td><?php echo e($runner->adress); ?></td>
-                
-                <?php if($runner->pro == 1): ?>
-                    <td>Sí</td>
-                    <td><?php echo e($runner->federation_number); ?></td>
-                <?php else: ?>
-                    <td>No</td>
-                    <td>----</td>
-                <?php endif; ?>
-                <td><?php echo e($runner->dorsal); ?></td>
-                <td><?php echo e($runner->points); ?></td>
+    <?php if(count($runners)==0): ?>
+        <p>¡No se han encontrado resultados!</p>
+    <?php else: ?>
+        <div class="row mt-4">
+            <?php $__currentLoopData = $runners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $runner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <?php
-                    $id_runner = $runner->id;
-                    //Link de la pagina en real
-                    $url = route('datosQr' , ['id_runner' => $id_runner , 'id_race' => $id_race]);
-                    //$url = "http://www.dianasalma-pruebas.com.mialias.net/bikeroll/public/datosQr/$id";
-                    echo $url;
+                    //Calcular la edad de la persona depende de su fecha de nacimiento
+                    $edad = now()->diff($runner->birth_date)->y;
                 ?>
-                <td><?php echo QrCode::size(100)->generate($url); ?></td>
 
-            </tr>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    </table>
-<?php endif; ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title"><?php echo e($runner->name . ' ' . $runner->last_name); ?></h2>
+                            <h6 class="card-subtitle mb-2 text-muted"><?php echo e($edad); ?> años</h6>
+                            
+                            <?php if($runner->sex == 1): ?>
+                                <p class="card-text"><strong>Género:</strong> Mujer</p>
+                            <?php else: ?>
+                                <p class="card-text"><strong>Género:</strong> Hombre</p>
+                            <?php endif; ?>
+                            <p class="card-text"><strong>Dirección:</strong> <?php echo e($runner->adress); ?></p>
+                            
+                            <?php if($runner->pro == 1): ?>
+                                <p class="card-text"><strong>Pro:</strong> Sí</p>
+                                <p class="card-text"><strong>Número de federación:</strong> <?php echo e($runner->federation_number); ?></p>
+                            <?php else: ?>
+                                <p class="card-text"><strong>Pro:</strong> No</p>
+                                <p class="card-text"><strong>Número de federación:</strong> ----</p>
+                            <?php endif; ?>
+                            <p class="card-text"><strong>Dorsal:</strong> <?php echo e($runner->dorsal); ?></p>
+                            <p class="card-text"><strong>Puntos:</strong> <?php echo e($runner->points); ?></p>
 
-<a href="<?php echo e(url('/paginaPrincipal')); ?>">Pagina principal</a>
+                            <?php
+                                $id_runner = $runner->id;
+                                //Link de la pagina en real
+                                $url = route('datosQr' , ['id_runner' => $id_runner , 'id_race' => $id_race]);
+                                //$url = "http://www.dianasalma-pruebas.com.mialias.net/bikeroll/public/datosQr/$id";
+                            ?>
+                            <?php echo QrCode::size(100)->generate($url); ?>
 
+                            <?php echo e($url); ?>
+
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        </div>
+    <?php endif; ?>
+    <a href="<?php echo e(url('/paginaPrincipal')); ?>">Pagina principal</a>
+</div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\bikerollSalma\resources\views/admin/inscripciones/runnersRace.blade.php ENDPATH**/ ?>

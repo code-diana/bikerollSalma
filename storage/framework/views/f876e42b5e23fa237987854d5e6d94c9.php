@@ -1,5 +1,5 @@
 <?php $__env->startSection('content'); ?>
-  <main>
+  <main style="margin-top:80px !important;">
     <div class="titleAdmin"><p>BIKE ROLL</p></div>
     <div class="logout"><p><a href="<?php echo e(url('logout')); ?>">Cerrar sesión</a></p></div>
   </main>

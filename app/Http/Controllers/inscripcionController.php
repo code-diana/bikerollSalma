@@ -57,6 +57,7 @@ class inscripcionController extends Controller{
                     'price'=> $price
                 ]);
             }
+            
             else{
                 $ins=Inscription::where('runner_id',$request->runner)->delete();
                 $runner=Runner::find($request->runner)->delete();
@@ -75,7 +76,8 @@ class inscripcionController extends Controller{
         }
     }
 
-    public function facturaCorredor(){
+    public function facturaCorredor(Request $request){
+        $id = $request->id;
         // $id_runner = $request->id;
         // if(isset($_POST)){
         //     $id_runner = $_POST['id_runner'];
@@ -87,14 +89,14 @@ class inscripcionController extends Controller{
                 ->join('races', 'races.id', '=', 'inscriptions.race_id')
                 ->join('runners', 'runners.id', '=', 'inscriptions.runner_id')
                 ->select('races.*', 'inscriptions.*', 'runners.*')
-                ->where('inscriptions.runner_id', '=', 6)
+                ->where('inscriptions.runner_id', '=', $id)
                 ->get();
 
         view()->share('factura.pdf',$results);
 
-        $pdf = PDF::loadView('corredor.pdfInfoCorredor', ['results' => $results]);
-        return $pdf->download('factura.pdf');
-        //return view('corredor.pdfInfoCorredor',['results' => $results]);
+        $pdf = PDF::loadView('corredor.facturaCorredor', ['results' => $results]);
+        //return $pdf->download('factura.pdf');
+        return view('corredor.facturaCorredor',['results' => $results]);
     }
 
     public function showRunners(Request $request){
